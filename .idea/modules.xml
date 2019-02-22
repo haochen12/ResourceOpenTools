@@ -4,6 +4,10 @@
     <modules>
       <module fileurl="file://$PROJECT_DIR$/ResourceOpenTools.iml" filepath="$PROJECT_DIR$/ResourceOpenTools.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
+      <module fileurl="file://$PROJECT_DIR$/business_filesystemlib/business_filesystemlib.iml" filepath="$PROJECT_DIR$/business_filesystemlib/business_filesystemlib.iml" />
+      <module fileurl="file://$PROJECT_DIR$/business_medialib/business_medialib.iml" filepath="$PROJECT_DIR$/business_medialib/business_medialib.iml" />
+      <module fileurl="file://$PROJECT_DIR$/commlib/commlib.iml" filepath="$PROJECT_DIR$/commlib/commlib.iml" />
+      <module fileurl="file://$PROJECT_DIR$/resourcelibrary/resourcelibrary.iml" filepath="$PROJECT_DIR$/resourcelibrary/resourcelibrary.iml" />
     </modules>
   </component>
 </project>

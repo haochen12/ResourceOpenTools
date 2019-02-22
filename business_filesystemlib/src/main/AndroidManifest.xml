@@ -1,0 +1,7 @@
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.iflytek.medialib">
+
+    <application>
+        <activity android:name=".FileSysActivity"></activity>
+    </application>
+</manifest>

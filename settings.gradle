@@ -1,1 +1,1 @@
-include ':app'
+include ':app', ':business_medialib', ':business_filesystemlib', ':commlib', ':resourcelibrary'
