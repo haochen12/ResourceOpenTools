@@ -19,7 +19,8 @@ public class ImageViewer extends android.support.v7.widget.AppCompatImageView im
     private boolean MODE_DRAG = false;
     private boolean MODE_SCALE = false;
     private float startDis = 0f;
-    private float oldAngle;
+    private float endDis = 0f;
+    private float old = 0f;
 
     public ImageViewer(Context context) {
         super(context);
@@ -29,7 +30,7 @@ public class ImageViewer extends android.support.v7.widget.AppCompatImageView im
     public ImageViewer(Context context, @Nullable AttributeSet attrs) {
         super(context, attrs);
         this.setOnTouchListener(this);
-        this.setScaleType(ScaleType.MATRIX);
+        this.setScaleType(ScaleType.MATRIX);//这个千万不能忘记，不然不起作用。
     }
 
     public ImageViewer(Context context, @Nullable AttributeSet attrs, int defStyleAttr) {
@@ -39,14 +40,12 @@ public class ImageViewer extends android.support.v7.widget.AppCompatImageView im
 
     @Override
     public boolean onTouch(View v, MotionEvent event) {
-
+        Log.i(TAG, "onTouch");
         switch (event.getAction() & event.getActionMasked()) {
             case MotionEvent.ACTION_DOWN:
                 startPointF.set(event.getX(), event.getY());
-                currentMatrix.set(this.getImageMatrix());
+                currentMatrix.set(getImageMatrix());
                 MODE_DRAG = true;
-                oldAngle = calculateAngle(event);
-                Log.i(TAG, "onTouch");
                 break;
             case MotionEvent.ACTION_MOVE:
                 float dx = event.getX() - startPointF.x;
@@ -56,9 +55,12 @@ public class ImageViewer extends android.support.v7.widget.AppCompatImageView im
                     tempMatrix.postTranslate(dx, dy);
                 }
 
+                /**
+                 * 两个手指
+                 */
                 if (event.getPointerCount() == 2) {
-                    float endDis = calculatePointerDistance(event);
-                    if (endDis > ViewConfiguration.getTouchSlop()) {
+                    endDis = calculatePointersDistance(event);
+                    if (endDis > ViewConfiguration.get(this.getContext()).getScaledTouchSlop()) {
                         currentMatrix.set(getImageMatrix());
                         tempMatrix.set(currentMatrix);
                         float[] values = new float[9];
@@ -68,21 +70,21 @@ public class ImageViewer extends android.support.v7.widget.AppCompatImageView im
                         startDis = endDis;
                     }
                     //旋转
-
                     float angle = calculateAngle(event);
-                    Log.i("haochen12", angle - oldAngle + "flsjflskjdlfk");
-                    if (angle - oldAngle > 10) {
+                    if (Math.abs(angle - old) > 3) {
                         PointF mid = calculateMidPointF(event);
-                        tempMatrix.postRotate(angle - oldAngle, mid.x, mid.y);
+                        tempMatrix.postRotate(angle - old, mid.x, mid.y);
+                        Log.i(TAG, (angle - old) + "°");
                         setImageMatrix(tempMatrix);
+                        old = angle;
                     }
-
                 }
 
                 break;
             case MotionEvent.ACTION_POINTER_DOWN:
                 MODE_SCALE = true;
-                startDis = calculatePointerDistance(event);
+                startDis = calculatePointersDistance(event);
+                old = calculateAngle(event);
                 Log.i(TAG, "ACTION_POINTER_DOWN");
                 break;
             case MotionEvent.ACTION_UP:
@@ -112,18 +114,11 @@ public class ImageViewer extends android.support.v7.widget.AppCompatImageView im
     /**
      * 计算两个手指的旋转角度
      *
-     * @param event
+     * @param event ,计算两个手指形成的向量与x轴的夹角。
      * @return
      */
     private float calculateAngle(MotionEvent event) {
-        if (event.getPointerCount() == 2) {
-            float sum = event.getX(0) * event.getX(1) + event.getY(0) * event.getY(1);
-            float eDis1 = (float) Math.sqrt(event.getX(0) * event.getX(0) + event.getY(0) * event.getY(0));
-            float eDis2 = (float) Math.sqrt(event.getX(1) * event.getX(1) + event.getY(1) * event.getY(1));
-            return (float) Math.toDegrees(Math.acos(sum / (eDis1 * eDis2)));
-        }
-
-        return -1;
+        return (float) Math.toDegrees(Math.atan2(event.getY(0) - event.getY(1), event.getX(0) - event.getX(1)));
     }
 
     /**
@@ -132,7 +127,7 @@ public class ImageViewer extends android.support.v7.widget.AppCompatImageView im
      * @param event
      * @return
      */
-    private float calculatePointerDistance(MotionEvent event) {
+    private float calculatePointersDistance(MotionEvent event) {
         if (event.getPointerCount() == 2) {
             float dx = event.getX(0) - event.getX(1);
             float dy = event.getY(0) - event.getY(1);
