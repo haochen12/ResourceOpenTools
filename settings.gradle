@@ -1,1 +1,6 @@
-include ':app', ':business_medialib', ':business_filesystemlib', ':commlib', ':resourcelibrary'
+include ':app'
+include ':VideoLib'
+
+if (!isModule.toBoolean()) {
+    project(':VideoLib').projectDir = new File('VideoLib')
+}

@@ -1,9 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.iflytek.mediaplayer">
-
-    <application android:theme="@style/AppTheme">
-        <activity android:name="iflytek.com.mediaplayer.MediaPlayerMainActivity" />
-    </application>
-
-</manifest>
