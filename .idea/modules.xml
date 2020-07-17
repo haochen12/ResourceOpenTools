@@ -3,13 +3,14 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/AndroidProjects-ResourceOpenTools.iml" filepath="$PROJECT_DIR$/.idea/modules/AndroidProjects-ResourceOpenTools.iml" group="ResourceOpenTools" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/BaseLib/BaseLib.iml" filepath="$PROJECT_DIR$/.idea/modules/BaseLib/BaseLib.iml" group="ResourceOpenTools/BaseLib" />
       <module fileurl="file://$PROJECT_DIR$/ResourceOpenTools.iml" filepath="$PROJECT_DIR$/ResourceOpenTools.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/app/ResourceOpenTools-app.iml" filepath="$PROJECT_DIR$/.idea/modules/app/ResourceOpenTools-app.iml" group="ResourceOpenTools/app" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/business_filesystemlib/ResourceOpenTools-business_filesystemlib.iml" filepath="$PROJECT_DIR$/.idea/modules/business_filesystemlib/ResourceOpenTools-business_filesystemlib.iml" group="ResourceOpenTools/business_filesystemlib" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/business_medialib/ResourceOpenTools-business_medialib.iml" filepath="$PROJECT_DIR$/.idea/modules/business_medialib/ResourceOpenTools-business_medialib.iml" group="ResourceOpenTools/business_medialib" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/commlib/ResourceOpenTools-commlib.iml" filepath="$PROJECT_DIR$/.idea/modules/commlib/ResourceOpenTools-commlib.iml" group="ResourceOpenTools/commlib" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/resourcelibrary/ResourceOpenTools-resourcelibrary.iml" filepath="$PROJECT_DIR$/.idea/modules/resourcelibrary/ResourceOpenTools-resourcelibrary.iml" group="ResourceOpenTools/resourcelibrary" />
-      <module fileurl="file://$PROJECT_DIR$/.idea/modules/VideoLib/VideoLib.iml" filepath="$PROJECT_DIR$/.idea/modules/VideoLib/VideoLib.iml" group="ResourceOpenTools/VideoLib" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/VideoComponent/VideoComponent.iml" filepath="$PROJECT_DIR$/.idea/modules/VideoComponent/VideoComponent.iml" group="ResourceOpenTools/VideoComponent" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
     </modules>
   </component>

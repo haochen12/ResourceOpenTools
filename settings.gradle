@@ -1,6 +1,8 @@
+include ':BaseLib'
 include ':app'
-include ':VideoLib'
+include ':VideoComponent'
 
 if (!isModule.toBoolean()) {
-    project(':VideoLib').projectDir = new File('VideoLib')
+    project(':VideoComponent').projectDir = new File('VideoComponent')
+    project(':BaseLib').projectDir = new File('BaseLib')
 }
