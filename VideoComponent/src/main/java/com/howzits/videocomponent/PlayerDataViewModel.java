@@ -1,9 +1,9 @@
 package com.howzits.videocomponent;
 
+import android.graphics.Bitmap;
 import android.os.Handler;
 import android.os.Message;
 import android.util.Log;
-import android.widget.SeekBar;
 
 import androidx.annotation.NonNull;
 import androidx.lifecycle.LiveData;
@@ -13,6 +13,7 @@ import androidx.lifecycle.ViewModel;
 import com.howzits.baselib.bindingadapter.IClickCallback;
 import com.howzits.baselib.bindingadapter.IClickCallbackObject;
 import com.howzits.baselib.util.DateUtil;
+import com.howzits.baselib.util.VideoUtil;
 
 public class PlayerDataViewModel extends ViewModel {
     private String path = "/sdcard/导出资源/【情境课文】雪地里的小画家情境课文（诵读.mp4";
@@ -20,9 +21,17 @@ public class PlayerDataViewModel extends ViewModel {
     public MutableLiveData<Integer> mPlayerProgress = new MutableLiveData<>();
     public MutableLiveData<String> mTotalTime = new MutableLiveData<>();
     public MutableLiveData<String> mCurrentTime = new MutableLiveData<>();
+    public MutableLiveData<Bitmap> firstFrameBitmap = new MutableLiveData<>();
+    public MutableLiveData<Boolean> showFirstFrameBitmap = new MutableLiveData<>();
 
     public PlayerDataViewModel() {
         this.mPlayerLayoutShowStatus.setValue(true);
+        firstFrameBitmap.setValue(VideoUtil.getFirstBitmpa(path));
+        showFirstFrameBitmap.setValue(true);
+    }
+
+    public LiveData<Bitmap> mBitmapLiveData() {
+        return firstFrameBitmap;
     }
 
     public LiveData<Boolean> getPlayerLayoutShowStatus() {
@@ -66,6 +75,7 @@ public class PlayerDataViewModel extends ViewModel {
         }
     };
 
+
     public IClickCallback mPlay = new IClickCallback() {
         @Override
         public void onClick() {
@@ -73,6 +83,7 @@ public class PlayerDataViewModel extends ViewModel {
                 PlayerManager.newInstance().stop();
             } else {
                 PlayerManager.newInstance().playVideo(path);
+                showFirstFrameBitmap.setValue(false);
             }
             mTotalTime.setValue(DateUtil.formatStandardTime(PlayerManager.newInstance().getDuration()));
             Log.e("haochen", "play");

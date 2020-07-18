@@ -1,6 +1,8 @@
 package com.howzits.baselib.bindingadapter;
 
+import android.graphics.Bitmap;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.SeekBar;
 
 import androidx.databinding.BindingAdapter;
@@ -15,6 +17,11 @@ public class ViewAdapter {
                 iClickCallback.onClick();
             }
         });
+    }
+
+    @BindingAdapter(value = {"loadbitmap"}, requireAll = false)
+    public static void loadBitmap(ImageView view, Bitmap bitmap) {
+        view.setImageBitmap(bitmap);
     }
 
     @BindingAdapter(value = {"drag_progress"}, requireAll = false)

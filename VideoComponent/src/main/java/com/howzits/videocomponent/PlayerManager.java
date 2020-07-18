@@ -24,7 +24,7 @@ public class PlayerManager {
         }
     }
 
-    public void setDisplay(SurfaceHolder surfaceHolder) {
+    public void initMediaPlayer(SurfaceHolder surfaceHolder) {
         mMediaPlayer.setDisplay(surfaceHolder);
     }
 
@@ -38,6 +38,10 @@ public class PlayerManager {
 
     public int getCurrentPosition() {
         return mMediaPlayer.getCurrentPosition();
+    }
+
+    public void setDataSource(String path) {
+
     }
 
     public void playVideo(String path) {
@@ -57,7 +61,9 @@ public class PlayerManager {
     }
 
     public void stop() {
-        mMediaPlayer.stop();
+        if (mMediaPlayer != null) {
+            mMediaPlayer.stop();
+        }
     }
 
     public void seek(int time) {

@@ -17,11 +17,17 @@
         tools:context=".VideoPlayerActivity">
 
 
-        <VideoView
+        <SurfaceView
             android:id="@+id/surfaceview"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             binding:clickCommand="@{dataviewmodel.mShowPlayerMenuStatusCallback}" />
+
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:visibility="@{dataviewmodel.showFirstFrameBitmap?View.VISIBLE:View.GONE}"
+            binding:loadbitmap="@{dataviewmodel.firstFrameBitmap}" />
 
         <TextView
             android:layout_width="match_parent"

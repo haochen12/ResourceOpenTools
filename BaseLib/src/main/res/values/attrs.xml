@@ -9,4 +9,8 @@
     <declare-styleable name="SeekBar">
         <attr name="drag_progress" format="integer" />
     </declare-styleable>
+
+    <declare-styleable name="ImageView">
+        <attr name="loadbitmap" format="reference" />
+    </declare-styleable>
 </resources>
