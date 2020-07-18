@@ -5,4 +5,8 @@
     <declare-styleable name="View">
         <attr name="clickCommand" format="reference" />
     </declare-styleable>
+
+    <declare-styleable name="SeekBar">
+        <attr name="drag_progress" format="integer" />
+    </declare-styleable>
 </resources>

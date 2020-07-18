@@ -2,6 +2,8 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.howzits.videocomponent">
 
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
+
     <application android:label="@string/title_activity_main">
         <activity
             android:name=".VideoPlayerActivity"

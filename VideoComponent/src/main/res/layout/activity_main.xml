@@ -16,27 +16,67 @@
         android:layout_height="match_parent"
         tools:context=".VideoPlayerActivity">
 
-        <SurfaceView
+
+        <VideoView
             android:id="@+id/surfaceview"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             binding:clickCommand="@{dataviewmodel.mShowPlayerMenuStatusCallback}" />
 
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:background="#88000000"
+            android:gravity="center"
+            android:paddingTop="@dimen/dp_10"
+            android:paddingBottom="@dimen/dp_10"
+            android:text="标题"
+            android:textColor="#ffff"
+            android:textSize="@dimen/sp_18"
+            android:visibility="@{dataviewmodel.PlayerLayoutShowStatus?View.VISIBLE:View.GONE}" />
+
         <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"
-            android:background="#22ffffff"
+            android:background="#88000000"
             android:gravity="center_horizontal"
             android:orientation="vertical"
             android:paddingTop="@dimen/dp_20"
             android:paddingBottom="@dimen/dp_20"
             android:visibility="@{dataviewmodel.PlayerLayoutShowStatus?View.VISIBLE:View.GONE}">
 
-            <SeekBar
+            <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_above="@+id/ll_play_setting_layout" />
+                android:layout_above="@+id/ll_play_setting_layout"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/remain_time"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@{dataviewmodel.mCurrentTime}"
+                    android:textColor="#ffff" />
+
+                <SeekBar
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_toLeftOf="@+id/total_time"
+                    android:layout_toRightOf="@+id/remain_time"
+                    android:background="@android:color/transparent"
+                    android:progress="@{dataviewmodel.playerProgress}"
+                    binding:drag_progress="@{dataviewmodel.mIClickCallbackObject}" />
+
+                <TextView
+                    android:id="@+id/total_time"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:text="@{dataviewmodel.mTotalTime}"
+                    android:textColor="#ffff" />/>
+            </RelativeLayout>
 
             <LinearLayout
                 android:id="@+id/ll_play_setting_layout"

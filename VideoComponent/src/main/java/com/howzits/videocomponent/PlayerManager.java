@@ -1,25 +1,59 @@
 package com.howzits.videocomponent;
 
 import android.media.MediaPlayer;
+import android.view.SurfaceHolder;
+
+import java.io.IOException;
 
 public class PlayerManager {
 
-    MediaPlayer mMediaPlayer;
+    private MediaPlayer mMediaPlayer;
+
+    private static PlayerManager INSTANCE;
 
     public static PlayerManager newInstance() {
-        PlayerManager fragment = new PlayerManager();
-        return fragment;
+        if (INSTANCE == null) {
+            INSTANCE = new PlayerManager();
+        }
+        return INSTANCE;
     }
 
-    public PlayerManager() {
+    private PlayerManager() {
         if (mMediaPlayer == null) {
             mMediaPlayer = new MediaPlayer();
         }
-
     }
 
-    public void adjustVolume(int volume) {
-        mMediaPlayer.setVolume(volume, volume);
+    public void setDisplay(SurfaceHolder surfaceHolder) {
+        mMediaPlayer.setDisplay(surfaceHolder);
+    }
+
+    public int getDuration() {
+        return mMediaPlayer.getDuration();
+    }
+
+    public boolean isPlaying() {
+        return mMediaPlayer.isPlaying();
+    }
+
+    public int getCurrentPosition() {
+        return mMediaPlayer.getCurrentPosition();
+    }
+
+    public void playVideo(String path) {
+        if (mMediaPlayer.isPlaying()) {
+            mMediaPlayer.pause();
+        } else {
+            try {
+                mMediaPlayer.stop();
+                mMediaPlayer.reset();
+                mMediaPlayer.setDataSource(path);
+                mMediaPlayer.prepare();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            mMediaPlayer.start();
+        }
     }
 
     public void stop() {
@@ -28,5 +62,9 @@ public class PlayerManager {
 
     public void seek(int time) {
         mMediaPlayer.seekTo(time);
+    }
+
+    public int currentPercentage() {
+        return 100 * mMediaPlayer.getCurrentPosition() / mMediaPlayer.getDuration();
     }
 }

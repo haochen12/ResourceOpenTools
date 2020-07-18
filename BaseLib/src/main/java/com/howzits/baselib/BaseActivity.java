@@ -1,9 +1,11 @@
 package com.howzits.baselib;
 
+import android.Manifest;
 import android.os.Bundle;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
 import androidx.databinding.DataBindingUtil;
 import androidx.databinding.ViewDataBinding;
 import androidx.lifecycle.ViewModel;
@@ -21,6 +23,8 @@ public abstract class BaseActivity<VDB extends ViewDataBinding, VM extends ViewM
         super.onCreate(savedInstanceState);
         initViewBinding();
         initVM();
+
+        ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.READ_EXTERNAL_STORAGE}, 1);
     }
 
     private void initVM() {
