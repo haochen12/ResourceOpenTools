@@ -1,15 +1,13 @@
 package com.howzits.videocomponent;
 
 import android.graphics.Bitmap;
-import android.os.Handler;
-import android.os.Message;
 import android.util.Log;
 
-import androidx.annotation.NonNull;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
+import com.howzits.baselib.Constant;
 import com.howzits.baselib.bindingadapter.IClickCallback;
 import com.howzits.baselib.bindingadapter.IClickCallbackObject;
 import com.howzits.baselib.util.DateUtil;
@@ -24,14 +22,16 @@ public class PlayerDataViewModel extends ViewModel {
     public MutableLiveData<Bitmap> firstFrameBitmap = new MutableLiveData<>();
     public MutableLiveData<Boolean> showFirstFrameBitmap = new MutableLiveData<>();
 
+    public MutableLiveData<Boolean> changePlayerStatus = new MutableLiveData<>();
+
     public PlayerDataViewModel() {
         this.mPlayerLayoutShowStatus.setValue(true);
         firstFrameBitmap.setValue(VideoUtil.getFirstBitmpa(path));
         showFirstFrameBitmap.setValue(true);
     }
 
-    public LiveData<Bitmap> mBitmapLiveData() {
-        return firstFrameBitmap;
+    public LiveData<Boolean> changePlayerStatus(){
+        return changePlayerStatus;
     }
 
     public LiveData<Boolean> getPlayerLayoutShowStatus() {
@@ -79,34 +79,32 @@ public class PlayerDataViewModel extends ViewModel {
     public IClickCallback mPlay = new IClickCallback() {
         @Override
         public void onClick() {
-            if (PlayerManager.newInstance().isPlaying()) {
-                PlayerManager.newInstance().stop();
+            if (PlayerManager.newInstance().playStatus() == Constant.STATUS_PLAY) {
+                PlayerManager.newInstance().stopPlay();
+                changePlayerStatus.setValue(true);
+            } else if (PlayerManager.newInstance().playStatus() == Constant.STATUS_STOP) {
+                PlayerManager.newInstance().replay();
+                changePlayerStatus.setValue(false);
             } else {
                 PlayerManager.newInstance().playVideo(path);
                 showFirstFrameBitmap.setValue(false);
+                changePlayerStatus.setValue(false);
             }
             mTotalTime.setValue(DateUtil.formatStandardTime(PlayerManager.newInstance().getDuration()));
-            Log.e("haochen", "play");
-            mHandler.sendEmptyMessage(0);
+            Log.e("haochen", "play" + PlayerManager.newInstance().playStatus());
+            PlayerManager.newInstance().setProgressListener(new PlayerManager.IProgressListener() {
+                @Override
+                public void clickProgress(int i) {
+                    mCurrentTime.setValue(DateUtil.formatStandardTime(PlayerManager.newInstance().getCurrentPosition()));
+                    mPlayerProgress.setValue(i);
+                }
+            });
         }
     };
-
-    Handler mHandler = new Handler(new Handler.Callback() {
-        @Override
-        public boolean handleMessage(@NonNull Message message) {
-            mPlayerProgress.setValue(PlayerManager.newInstance().currentPercentage());
-            mCurrentTime.setValue(DateUtil.formatStandardTime(PlayerManager.newInstance().getCurrentPosition()));
-            Log.e("haochen", "tests");
-            if (PlayerManager.newInstance().isPlaying()) {
-                mHandler.sendEmptyMessage(0);
-            }
-            return false;
-        }
-    });
 
     @Override
     protected void onCleared() {
         super.onCleared();
-        PlayerManager.newInstance().stop();
+        PlayerManager.newInstance().stopPlay();
     }
 }

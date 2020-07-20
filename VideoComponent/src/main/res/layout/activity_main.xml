@@ -90,6 +90,7 @@
                 android:layout_height="wrap_content"
                 android:layout_alignParentBottom="true"
                 android:layout_centerHorizontal="true"
+                android:gravity="center"
                 android:orientation="horizontal">
 
                 <TextView
@@ -100,9 +101,10 @@
                     binding:clickCommand="@{dataviewmodel.mPre}" />
 
                 <ImageView
+                    android:id="@+id/play_status"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:src="@mipmap/ic_player"
+                    android:background="@mipmap/ic_action_play"
                     android:textColor="@android:color/white"
                     binding:clickCommand="@{dataviewmodel.mPlay}" />
 

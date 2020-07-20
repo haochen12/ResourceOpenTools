@@ -13,4 +13,5 @@
     <declare-styleable name="ImageView">
         <attr name="loadbitmap" format="reference" />
     </declare-styleable>
+
 </resources>

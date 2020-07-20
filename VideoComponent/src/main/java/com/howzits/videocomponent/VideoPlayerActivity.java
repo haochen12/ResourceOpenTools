@@ -5,12 +5,14 @@ import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 
 import androidx.annotation.Nullable;
+import androidx.lifecycle.Observer;
 
-import com.howzits.baselib.BaseActivity;
+import com.howzits.baselib.base.BaseActivity;
 import com.howzits.videocomponent.databinding.ActivityMainBinding;
 
 public class VideoPlayerActivity extends BaseActivity<ActivityMainBinding, PlayerDataViewModel> implements SurfaceHolder.Callback {
     private String path = "/sdcard/导出资源/【情境课文】雪地里的小画家情境课文（诵读.mp4";
+
     @Override
     public int getLayoutResId() {
         return R.layout.activity_main;
@@ -21,6 +23,17 @@ public class VideoPlayerActivity extends BaseActivity<ActivityMainBinding, Playe
         super.onCreate(savedInstanceState);
         SurfaceView mSurfaceView = binding.surfaceview;
         mSurfaceView.getHolder().addCallback(this);
+
+        mViewModel.changePlayerStatus().observe(this, new Observer<Boolean>() {
+            @Override
+            public void onChanged(Boolean aBoolean) {
+                if (!aBoolean) {
+                    binding.playStatus.setBackground(getResources().getDrawable(R.mipmap.ic_action_pause));
+                } else {
+                    binding.playStatus.setBackground(getResources().getDrawable(R.mipmap.ic_action_play));
+                }
+            }
+        });
     }
 
     @Override
@@ -30,7 +43,7 @@ public class VideoPlayerActivity extends BaseActivity<ActivityMainBinding, Playe
 
     @Override
     public void surfaceCreated(SurfaceHolder surfaceHolder) {
-        PlayerManager.newInstance().initMediaPlayer(surfaceHolder);
+        PlayerManager.newInstance().setDisplay(surfaceHolder);
     }
 
     @Override
@@ -46,6 +59,6 @@ public class VideoPlayerActivity extends BaseActivity<ActivityMainBinding, Playe
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        PlayerManager.newInstance().stop();
+        PlayerManager.newInstance().destroy();
     }
 }

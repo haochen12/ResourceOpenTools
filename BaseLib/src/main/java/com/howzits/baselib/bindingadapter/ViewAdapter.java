@@ -7,6 +7,8 @@ import android.widget.SeekBar;
 
 import androidx.databinding.BindingAdapter;
 
+import com.howzits.baselib.R;
+
 public class ViewAdapter {
 
     @BindingAdapter(value = {"clickCommand"}, requireAll = false)

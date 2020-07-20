@@ -1,4 +1,4 @@
-package com.howzits.baselib;
+package com.howzits.baselib.base;
 
 import android.Manifest;
 import android.os.Bundle;
